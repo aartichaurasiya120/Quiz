@@ -3,25 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Online Quiz Test</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>Online Quiz Test</h1>
-    </div>
+<h1>Online Quiz Test</h1>
 
-    <div id="quizContainer"></div>
+<div id="quizContainer"></div>
 
-    <div class="submit-area">
-        <button onclick="submitQuiz()">Submit Quiz</button>
-        <div id="result"></div>
-    </div>
-</div>
+<button onclick="submitQuiz()">Submit</button>
+<div id="result"></div>
 
-<body>
+<!-- 👇 JS ko yaha bottom pe rakho -->
+<script>
+const questions = [
+  { question: "5+7?", options:["10","11","12","13"], answer:"12" },
+  { question: "18÷3?", options:["5","6","7","8"], answer:"6" }
+];
 
-<script src="script.js"></script>
+const container = document.getElementById("quizContainer");
+
+questions.forEach((q,i)=>{
+  let html = `<p>${q.question}</p>`;
+  q.options.forEach(opt=>{
+    html += `<input type="radio" name="q${i}" value="${opt}">${opt}<br>`;
+  });
+  container.innerHTML += html;
+});
+
+function submitQuiz(){
+  let score=0;
+
+  questions.forEach((q,i)=>{
+    let ans = document.querySelector(`input[name="q${i}"]:checked`);
+    if(ans && ans.value===q.answer) score++;
+  });
+
+  document.getElementById("result").innerText =
+    `Score: ${score}/${questions.length}`;
+}
+</script>
+
 </body>
 </html>
